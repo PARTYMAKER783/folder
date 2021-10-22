@@ -1,18 +1,19 @@
-name: Docker Image CI
+name: ci
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches:
+       [main]
 
 jobs:
-
-  login:
+  docker:
     runs-on: ubuntu-latest
     steps:
       -
-        name: Login to GitHub Container Registry
+        name: Checkout
+        uses: actions/checkout@v2
+      -
+        name: Log in to YC
         uses: docker/login-action@v1
         with:
           registry: cr.yandex
@@ -23,3 +24,4 @@ jobs:
          run: |
           docker build -t cr.yandex/crp6lfflt28u48c6iv8f/time:latest .
           docker push cr.yandex/crp6lfflt28u48c6iv8f/time:latest
+
